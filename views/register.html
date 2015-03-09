@@ -1,0 +1,38 @@
+<% include header.html %>
+<div class="container-fluid">
+    <div class="row-fluid">
+    	<div class="tips"></div>
+		<% if(resultREG==0){ %>
+		<form class="form-horizontal" action="adduser" method="post">
+		  <div class="control-group">
+		    <label class="control-label" >请输入用户名</label>
+		    <div class="controls">
+		      <input type="text" class="user_user" name='user' placeholder="name">
+		      <a class="btn user_verify">验证是否可用</a>
+                
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label">请输入密码</label>
+		    <div class="controls">
+		      <input type="password" class="user_password" name="password" placeholder="Password">
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label">再次输入密码</label>
+		    <div class="controls">
+		      <input type="password" class="user_password" placeholder="Password">
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <div class="controls">
+		      <button type="submit" class="btn user_submit">注册</button>
+		    </div>
+		  </div>
+		</form>
+		<% }else{ %>
+			<div class="well">注册成功  <a class='btn btn-primary' href="/login">去登陆</a> </div>
+		<% }%>
+	</div>
+</div>
+<% include footer.html %>

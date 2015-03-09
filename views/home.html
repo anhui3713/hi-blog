@@ -1,0 +1,167 @@
+<% include header.html %>
+<link href="/stylesheets/jquery.dataTables.min.css" rel="stylesheet">
+<link href="/stylesheets/jquery.dataTables_themeroller.css" rel="stylesheet">
+
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+
+
+<% if (result!='') { %>  
+
+
+<div class="span3 tab_head bs-docs-sidebar">
+	<ul class="nav nav-list bs-docs-sidenav affix">
+	  <li class="active" data-cla="usercenter"><i class="icon-chevron-right"></i> 个人中心</li>
+	  <li data-cla="myarticle"><i class="icon-chevron-right"></i> 我的文章</li>
+	  <li data-cla="mycomment"><i class="icon-chevron-right"></i> 我的评论</li>
+	  <li data-cla="operations"><i class="icon-chevron-right"></i> 其它选项</li>
+	</ul>
+</div>
+<div class="span9 tab_body">
+	<section class="usercenter block">
+		<p class="lead">欢迎您： <%=username%>  </p> 
+		<p class="label label-info">登陆时间： <%=date%> </p>
+
+        <% if(result.length){ %>
+			<% result.forEach(function(data){ %>
+				<div id="<%=data._id%>"> <%#= data.type==1?'管理员':'你好' %> 
+					<ul>
+						<li>用户名 <%=data.name%></li>
+						<li>密码 <%=data.password%></li>
+						<li>简介 <%=data.content%></li>
+						<li>年龄 <%=data.age%></li>
+						<li>城市 <%=data.city%></li>
+						<li>邮箱 <%=data.email%></li>
+						<li>性别 <%=data.sex%></li>
+						<li>权限 <%=data.type%></li>
+						<li>积分 <%=data.score%></li>
+						<li>关注 <%=data.follow%></li>
+						<li>粉丝 <%=data.fans%></li>
+
+					</ul>
+				</div>	
+			<% }) %>
+        <% } %>
+
+	</section>
+	<section class="myarticle none">
+		我的文章
+	</section>
+	<section class="mycomment none">
+		我的评论
+	</section>
+	<section class="operations none">
+
+
+        
+		<div class="tips"></div>
+        <% if(result.length){ %>
+			<% result.forEach(function(data){ %>
+				<div id="<%=data._id%>"> <%#= data.type==1?'管理员':'你好' %> 
+					<% if(data.type==1){ %>
+						
+						管理员你好， <a class="btn admin_user btn btn-danger">管理 用户</a> <a class="btn add_user btn btn-primary">新增 用户</a><br>
+					<% } else if(data.type==2){%>
+						普通用户你好，
+					<%} else {%>
+						订阅者你好
+					<%}%>
+				</div>	
+			<% }) %>
+        <% } %>
+
+		<div class="none admin_user_form">
+
+			<form class="form-horizontal">
+			  <div><br>该操作危险，你确认你的密钥权限（ 测试密钥：名称 t 密码 data ）</div>
+			  <div class="control-group">
+			    <label class="control-label">密钥名称</label>
+			    <div class="controls">
+			      <input type="text" name="m_name" placeholder="t">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label">密钥字符串</label>
+			    <div class="controls">
+			      <input type="password" name="m_password" placeholder="data">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <div class="controls">
+			      <a class="btn m_submit">提交</a>
+			    </div>
+			  </div>
+			</form>
+			
+		</div>
+
+		<div class="none add_user_form">
+			<br>
+			<p>新增用户前请点击管理用户 提交你的密钥</p>
+			<form class="form-inline">
+			  <input type="text" name="user" class="input-small add_username" placeholder="用户名 *">
+			  <input type="text" name="password" class="input-small add_password" placeholder="密码 *">
+			  <input type="text" name="email" class="input-small add_email" placeholder="邮箱">
+			  <input type="text" name="age" class="input-small add_age" placeholder="年龄">
+			  <input type="text" name="content" class="input-small add_content" placeholder="介绍">
+			  <select class="add_type" name="type">
+			  	<option value="2">普通用户（发文发言）</option>
+			    <option value="1">管理员</option>
+			    <option value="3">订阅者</option>
+			    <option value="0">被注销的用户</option>
+			    <option value="4">游客（禁言禁文）</option>
+			    <option value="6">被禁文但可评论</option>
+			    <option value="5">被禁评论但可发文</option>
+			  </select>
+			  <button type="submit" class="btn btn-success add_submit">创建</button >
+			</form>
+		</div>
+	
+		<div class='user_table none'>
+			<table id="user_dataTable" class="table table-hover">
+				<thead>
+					<tr>
+					  <th width="20%">序号</th>
+					  <th width="20%">用户名</th>
+					  <th width="20%">密码</th>
+					  <th width="20%">等级</th>
+					  <th width="20%">操作</th>
+					</tr>
+				</thead>
+				<tbody class="users_list">
+
+				</tbody>
+			</table>
+		</div>
+
+
+	</section>
+
+</div>
+
+
+<%}else{%>
+
+<div class="well">
+	<p>登录失败……</p>
+	<a class='btn btn-primary' href="/login">重新登陆</a>
+</div>
+
+<%}%>
+
+
+
+    </div>
+</div>
+
+
+
+<% include footer.html %>
+
+<script src="/javascripts/adminFunction.js"></script>
+<script src="/javascripts/jquery.dataTables.min.js"></script>
+
+
+

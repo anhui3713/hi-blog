@@ -1,0 +1,42 @@
+<% include header.html %>
+    <div class="container-fluid">
+        <div class="row-fluid marketing">
+        	
+
+            <div class="span6">
+                <form action="home" method="post">
+                    <fieldset>
+                        <legend>请输入</legend>
+                    <p>
+                        <span>用户名:</span>
+                        <br>
+                        <input class="user_user" name="user" type="text">
+                        <!-- <a class="btn user_verify">验证是否可用</a> -->
+                    </p>
+                    <p>
+                        <span>密码:</span>
+                        <br>
+                        <input class="user_password" name="password" type="password">
+                    </p>
+                    <p>
+                        <input type="submit" value="登陆" class="btn btn-danger user_submit">
+                        <a class="btn btn-success" href="/register">注册</a>
+                    </p>
+
+                    </fieldset>
+                </form>
+                <div class="tips"></div>
+            </div>
+
+            <div class='span6'>
+                <p>测试账号</p>
+                普通用户 ： highsea 密码 123456  <br>luyi 密码 123456<br>
+                管理员 ：  gaohai 密码 123456  <br> luyi123 密码 123456
+
+            </div>
+
+        </div>
+    </div>
+
+<% include footer.html %>
+
