@@ -43,4 +43,4 @@ margin-top: 28px;
 /* 表格 */
 .users_list a{cursor: pointer;}
 .users_list a:hover{color: #f00;}
-.users_list textarea{width: 60px; }
+.users_list input{width: 60px;border: none;text-decoration: underline;}

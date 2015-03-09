@@ -1,6 +1,9 @@
-
-/*
- * GET home page.
+/**
+ * NodeJS API for 会员增删改查登陆注册
+ * github: https://github.com/highsea/hi-blog
+ * @author Gao Hai <admin@highsea90.com>
+ * @link http://highsea90.com
+ * @version V0.0.1
  */
 var database = require('./../db/userlist_comment_article.js');
 
@@ -136,68 +139,6 @@ exports.adduser = function(req, res){
 
 }
 
-
-//get查找 全部用户 只显示 name password type
-/*exports.getuser = function (req, res){
-
-    var r = req.query;
-    var keydoc = {
-        name : r.name,
-        content : r.key,
-        type : 1
-    };
-    if (!r.name||!r.key&&r.name==''||r.key=='') {
-        res.end(JSON.stringify({code:2001,message:"需要密钥"}));
-
-    }else{
-
-        //验证密钥
-        database.apiKey.find(keydoc, function(error, result){
-            if (error||result=='') {
-                res.send(JSON.stringify({code:2002, message:'非法key:', data:error}));
-            }else{
-                //开始处理 正真查询 user的 api 
-                if (req.session.username=='') {
-                    res.end(JSON.stringify({code:2003,message:"需要登录"}));
-                }else{
-                    console.log(req.session.username);
-                    database.userlist.find({}, {name : 1, type : 1, password : 1}, {}, function(error, doc){
-                        //第一部分  name: jhon 和 name：eric 
-                        //db.find({ name: { $in: [ 'jhon’, ‘eric’ ] } })
-                        //第二部分显示部分键值 {name : 1, type : 1, password : 1}
-                        //第三部分 {limit:5}
-                        if (error) {
-                            var code = 5001,
-                                message = error,
-                                data = '';
-                        }else {
-                            var code = 2000,
-                                message = 'success',
-                                data = doc;
-                        }
-                        var str = {
-                            'code':code,
-                            'message':message,
-                            'data':data
-                        };
-
-                        if (r.callback) {  
-                            var str =  r.callback + '(' + JSON.stringify(str) + ')';
-                            res.end(str);  
-                        } else {  
-                            res.end(JSON.stringify(str));
-                        } 
-
-                    });
-                }
-            }
-        })
-    }
-}*/
-
-
-
-
 // get查找单用户 显示全部键值
 exports.oneuser = function (req, res){
 
@@ -218,11 +159,6 @@ exports.getuser = function(req, res){
 
     login_verify(req, res, function(){
         database.userlist.find({}, {name : 1, type : 1, password : 1}, {}, function(error, doc){
-            //console.log('回调');
-            //第一部分  name: jhon 和 name：eric 
-            //db.find({ name: { $in: [ 'jhon’, ‘eric’ ] } })
-            //第二部分显示部分键值 {name : 1, type : 1, password : 1}
-            //第三部分 {limit:5}
             json_api(req, res, error, doc);
         })
     });
@@ -305,10 +241,6 @@ exports.adduserget = function(req, res){
         })
     })
 }
-    //console.log('链接：'+r+r.name+r.password+r.content+r.email+r.callback);
-
-
-    //var doc = {name : '#'+('00000'+(Math.random()*0x1000000<<0).toString(16)).slice(-6), password : 'sa'+Math.random()*100 , age : Math.floor(Math.random()*100 + 1) , type:Math.floor(Math.random()*3 + 1)};
 
 
 //路由 数据库 分类+数量 count 查询 多功能接口（可用户 新建 删除相关分类数据）

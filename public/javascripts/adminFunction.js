@@ -155,9 +155,9 @@ function getUserAdmin (name,password) {
 
                     var dataString = {
                             "id"        : "<b class='us_id' data-id='"+data[i]._id+"'>"+i+"</b>",
-                            "name"      : "<textarea class='us_name'>"+data[i].name+"</textarea>",
-                            "password"  : "<textarea class='us_password'>"+data[i].password+"</textarea>",
-                            "type"      : "<textarea class='us_type' title='"+userType[data[i].type]+"' class=''>"+data[i].type+"</textarea>",
+                            "name"      : "<input class='us_name' value='"+data[i].name+"' />",
+                            "password"  : "<input class='us_password' value='"+data[i].password+"' />",
+                            "type"      : "<input class='us_type' title='"+userType[data[i].type]+"' class=''  value='"+data[i].type+"' />",
                             "operate"   : "<a title='删除用户' class='user_remove icon-remove'></a> . <a title='详细信息' class='user_info icon-th-list'></a> . <a title='保存修改' class='user_save icon-ok'></a>"
                         };
                     dataArr.push(dataString);
