@@ -1,11 +1,11 @@
 /**
- * NodeJS API for 会员增删改查登陆注册
+ * Routes for 会员增删改查登陆注册
  * github: https://github.com/highsea/hi-blog
  * @author Gao Hai <admin@highsea90.com>
  * @link http://highsea90.com
- * @version V0.0.1
  */
-var database = require('./../db/userlist_comment_article.js');
+var database = require('./../db/userlist_comment_article.js'),
+    fun = require('./function.js');
 
 exports.index = function(req, res){
 
@@ -14,7 +14,7 @@ exports.index = function(req, res){
         //req.session.living = err ? err : doc;
 
         res.render('index', { 
-            title: '创业数据库' ,
+            title: 'CMS管理系统' ,
             result:0,//未登录
             living: err ? err : doc
         });
@@ -142,13 +142,13 @@ exports.adduser = function(req, res){
 // get查找单用户 显示全部键值
 exports.oneuser = function (req, res){
 
-    login_verify(req, res, function(){
+    fun.login_verify(req, res, function(){
 
         database.userlist.findById( req.query.id, function(err, doc){
             if (err) {
-                jsonTips(req, res, 5001, err, '');
+                fun.jsonTips(req, res, 5001, err, '');
             }else{
-                jsonTips(req, res, 2000, 'success', doc);
+                fun.jsonTips(req, res, 2000, 'success', doc);
             }
         })
     })
@@ -157,9 +157,9 @@ exports.oneuser = function (req, res){
 //get查找 全部用户 只显示 name password type
 exports.getuser = function(req, res){
 
-    login_verify(req, res, function(){
+    fun.login_verify(req, res, function(){
         database.userlist.find({}, {name : 1, type : 1, password : 1}, {}, function(error, doc){
-            json_api(req, res, error, doc);
+            fun.json_api(req, res, error, doc);
         })
     });
 }
@@ -167,18 +167,18 @@ exports.getuser = function(req, res){
 //get 删除 remove 用户
 exports.remove1user = function(req, res){
 
-    login_verify(req, res, function (){
+    fun.login_verify(req, res, function (){
 
         database.userlist.count({_id:req.query.id}, function(err, doc){
             if (err) {
-                jsonTips(req, res, 5001, err, '');
+                fun.jsonTips(req, res, 5001, err, '');
             }else{
                 if (doc) {
                     database.userlist.remove({_id: req.query.id}, function(error){
-                        jsonTips(req, res, '2000', 'success', '数据已经删除');
+                        fun.jsonTips(req, res, '2000', 'success', '数据已经删除');
                     });
                 }else{
-                    jsonTips(req, res, '2015', 'data not exist', '数据不存在');
+                    fun.jsonTips(req, res, '2015', 'data not exist', '数据不存在');
                 }
             }
         });
@@ -189,14 +189,14 @@ exports.remove1user = function(req, res){
 //更改 update 单个用户信息 get
 exports.up1user = function(req, res){
 
-    login_verify(req, res, function (){
+    fun.login_verify(req, res, function (){
 
-        add_update_verify(req, res,function(){
+        fun.add_update_verify(req, res,function(){
             var r = req.query,
                 doc = {name:r.user, password:r.password, type:r.type};
             database.userlist.update({_id:r.id}, doc, {}, function(error){
 
-                json_api(req, res, error, {id:r.id, now:doc});
+                fun.json_api(req, res, error, {id:r.id, now:doc});
 
             });
         });
@@ -207,9 +207,9 @@ exports.up1user = function(req, res){
 //路由get 新增 后台管理员添加 create 用户
 exports.adduserget = function(req, res){
 
-    login_verify(req, res, function(){
+    fun.login_verify(req, res, function(){
 
-        add_update_verify(req, res,function(){
+        fun.add_update_verify(req, res,function(){
             var r = req.query;
             var doc = {
                 name        : r.user,
@@ -224,15 +224,15 @@ exports.adduserget = function(req, res){
 
             database.userlist.count({name:r.user}, function(err, result){
                 if (err) {
-                    jsonTips(req, res, 5001, err, '');
+                    fun.jsonTips(req, res, 5001, err, '');
                 }else{
                     
                     if (result) {
-                        jsonTips(req, res, '2014', 'user exist', '用户已经存在');
+                        fun.jsonTips(req, res, '2014', 'user exist', '用户已经存在');
                     }else{
                         //插入数据库
                         database.userlist.create(doc, function(error){
-                            json_api(req, res, error, {id:r.id, now:doc});
+                            fun.json_api(req, res, error, {id:r.id, now:doc});
                         })
                     }
                 }
@@ -251,7 +251,7 @@ exports.userCount = function (req, res){
         q_count = {countname:countvalue};
 
     if (!countname||!countvalue||countname=='password'||q_count.length>1) {
-        jsonTips(req, res, '2013', '需要分类名 name 和该类值 value , 禁止多条件查询', {name:'user|age|city|email|type|living|score|fans|follow|content|time|sex', value:'String|Number|Date|Boolean'});
+        fun.jsonTips(req, res, '2013', '需要分类名 name 和该类值 value , 禁止多条件查询', {name:'user|age|city|email|type|living|score|fans|follow|content|time|sex', value:'String|Number|Date|Boolean'});
     }else{
         var coutListArr = {
             'userid': {_id:countvalue},
@@ -272,114 +272,18 @@ exports.userCount = function (req, res){
         database.userlist.count(coutListArr[countname], function(err, doc){
 
             if (err) {
-                jsonTips(req, res, '2011', err, '');
+                fun.jsonTips(req, res, '2011', err, '');
 
             }else{
                 if (doc<1) {
-                    jsonTips(req, res, '2000', 'ok', doc);
+                    fun.jsonTips(req, res, '2000', 'ok', doc);
                 }else{
-                    jsonTips(req, res, '2012', 'success', doc);
+                    fun.jsonTips(req, res, '2012', 'success', doc);
                 }
             }
         })
     }
 }
-
-
-
-//方法 用户名 密码 type 验证--用于 更新用户 新建用户
-function add_update_verify(req, res, callback){
-    var r = req.query;
-    if (!r.user||r.user==''||!r.password||r.password==''||!r.type||r.type=='') {
-        //||!r.id||r.id==''
-        jsonTips(req, res, '2010', '请检查用户名密码以及分类', '');
-
-    }else{
-        callback();
-    }
-}
-//方法 登录验证 
-function login_verify(req, res, cb){
-
-    var r = req.query;
-    var keydoc = {
-        name : r.name,
-        content : r.key,
-        type : 1
-    };
-    if (!r.name||!r.key||r.name==''||r.key=='') {
-
-        jsonTips(req, res, '2001', '您没有权限，需要密钥哦', '');
-
-    }else{
-        //验证密钥
-        database.apiKey.find(keydoc, function(error, result){
-            if (error||result=='') {
-
-                jsonTips(req, res, '2002', '警告：非法key，你的行为已被记录', error);
-            
-            }else{
-                //开始处理 正真查询 user的 api 
-                if (req.session.username=='') {
-
-                    jsonTips(req, res, '2003', '您需要先登录', '');
-
-                }else{
-                    //console.log(req.session.username);
-                    cb();
-                }
-            }
-        })
-    }
-}
-
-//方法 jsonp 提示 接口生成
-
-function jsonTips(req, res, code, message, data){
-
-    var str = {
-        code : code,
-        message : message,
-        data : data
-    }
-    if (req.query.callback) {  
-        str =  req.query.callback + '(' + JSON.stringify(str) + ')';
-        res.end(str);  
-    } else {  
-        res.end(JSON.stringify(str));
-    } 
-
-}
-
-
-
-//方法 jsonp 查询结果接口生成
-function json_api(req, res, error, doc){
-
-    var r = req.query;
-    if (error) {
-        var code = 5001,
-            message = error,
-            data = '';
-    }else {
-        var code = 2000,
-            message = 'success',
-            data = doc;
-    }
-    var str = {
-        'code':code,
-        'message':message,
-        'data':data
-    };
-
-    if (r.callback) {  
-        var str =  r.callback + '(' + JSON.stringify(str) + ')';
-        res.end(str);  
-    } else {  
-        res.end(JSON.stringify(str));
-    } 
-}
-
 
 
 

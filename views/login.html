@@ -29,10 +29,20 @@
             </div>
 
             <div class='span6'>
-                <p>测试账号</p>
-                普通用户 ： highsea 密码 123456  <br>luyi 密码 123456<br>
-                管理员 ：  gaohai 密码 123456  <br> luyi123 密码 123456
+                <h5>初始化管理员 ，举例：</h5>
+            <pre>
+$ cd /f/MongoDb/bin/&&mongo
+MongoDB shell version: 2.6.6
+connecting to: test
+> use hi-blog
+switched to db hi-blog
+> db.users.insert({name:"admin",password:"123456",type:"1"})
+WriteResult({ "nInserted" : 1 })//添加了管理员
+> db.apikeys.insert({name:"test",content:"123",type:1})
+WriteResult({ "nInserted" : 1 })//添加了操作权限 KEY
+>_
 
+            </pre>
             </div>
 
         </div>

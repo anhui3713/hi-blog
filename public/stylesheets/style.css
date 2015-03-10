@@ -1,38 +1,20 @@
-body {
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
+/**
+ * 通用 css
+ * github: https://github.com/highsea/hi-blog
+ * @author Gao Hai <admin@highsea90.com>
+ * @link http://highsea90.com
+ */
 
-/* Custom container */
-.container-narrow {
-margin: 0 auto;
-max-width: 700px;
-}
-.container-narrow > hr {
-margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-margin: 60px 0;
-text-align: center;
-}
-.jumbotron h1 {
-font-size: 72px;
-line-height: 1;
-}
-.jumbotron .btn {
-font-size: 21px;
-padding: 14px 24px;
-}
-
-/* Supporting marketing content */
-.marketing {
-margin: 60px 0;
-}
-.marketing p + h4 {
-margin-top: 28px;
-}
+body{padding-top:20px;padding-bottom:40px;overflow-y: hidden;}
+.container-narrow{margin:0 auto;max-width:700px;}
+.container-narrow>hr{margin:30px 0;}
+.jumbotron{margin:60px 0;text-align:center;}
+.jumbotron h1{font-size:72px;line-height:1;}
+.jumbotron .btn{padding:14px 24px;font-size:21px;}
+.marketing{margin:60px 0;}
+.marketing p+h4{margin-top:28px;}
+input,button,select,textarea{outline:none}
+textarea{resize:none}
 
 .none{display: none;}
 .block{display: block;}
@@ -41,6 +23,12 @@ margin-top: 28px;
 .tab_head li{padding: 0.1em 0.5em;margin: 0.2em 0;cursor:pointer;}
 .tab_body section{min-height: 600px;}
 /* 表格 */
+.user_table{padding-top: 1.5em}
 .users_list a{cursor: pointer;}
 .users_list a:hover{color: #f00;}
-.users_list input{width: 60px;border: none;text-decoration: underline;}
+.users_list textarea{width: 60px;height: 1.5em;border: none;text-decoration: underline;color: #00c;overflow: hidden;white-space: nowrap;resize: none;}
+.users_list .us_id,.users_list .us_type{width: 20px;}
+.users_list .us_name{width: 90px;}
+select[name="user_dataTable_length"]{width:65px;}
+input[aria-controls="user_dataTable"]{width: 90px}
+

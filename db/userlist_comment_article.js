@@ -1,3 +1,9 @@
+/**
+ * mongoose Schema 会员集合；评论；文章；栏目（菜单）；权限KEY
+ * github: https://github.com/highsea/hi-blog
+ * @author Gao Hai <admin@highsea90.com>
+ * @link http://highsea90.com
+ */
 var mongoose = require('mongoose');
 var db = mongoose.createConnection('mongodb://127.0.0.1:27017/hi-blog');
 // 链接错误
@@ -49,8 +55,16 @@ var articleSchema =new Schema({
     reply   : Number, // 回复数
     //forward : Number, // 转发
     like    : Number, //收藏数
-    type    : Number //垃文章论放入回收站 0 正常1 原创 2 推荐 3
+    type    : Number, //垃文章论放入回收站 0 正常1 原创 2 推荐 3
+    classify: String //文章的类目
 });
+
+var classifySchema = new Schema({
+    name    : String,//英文缩写
+    title   : String,//中文导航
+    content : String,//菜单介绍
+    parent  : String//空为顶级，有父级写父级的 name
+})
 
 var apiKeySchema = new Schema({
     name    : {type:String,required:true}, // Key 的名称
@@ -63,5 +77,6 @@ exports.userlist = db.model('users', userSchema);
 exports.comment = db.model('comments', commentSchema);
 exports.article = db.model('articles', articleSchema);
 exports.apiKey = db.model('apiKeys', apiKeySchema);
+exports.classify = db.model('classifys', classifySchema);
 
 

@@ -62,15 +62,12 @@
 				<div id="<%=data._id%>"> <%#= data.type==1?'管理员':'你好' %> 
 					<% if(data.type==1){ %>
 						
-						管理员你好， <a class="btn admin_user btn btn-danger">管理 用户</a> <a class="btn add_user btn btn-primary">新增 用户</a><br>
-					<% } else if(data.type==2){%>
-						普通用户你好，
-					<%} else {%>
-						订阅者你好
-					<%}%>
-				</div>	
-			<% }) %>
-        <% } %>
+						<div class="administrator">
+							<p class="label label-info">管理员你好：</p> <br>
+							<a class="btn admin_user btn btn-danger">用户管理</a>
+						</div>
+
+					
 
 		<div class="none admin_user_form">
 
@@ -118,7 +115,16 @@
 			  <button type="submit" class="btn btn-success add_submit">创建</button >
 			</form>
 		</div>
-	
+ 		<div class='add_menu_form none'>
+			<form class="form-inline">
+			  <input type="text" name="name" class="input-small menu_name" placeholder="菜单字母简写 *">
+			  <input type="text" name="title" class="input-small menu_title" placeholder="中文显示菜单 *">
+			  <input type="text" name="content" class="input-small menu_content" placeholder="菜单介绍">
+			  <input type="text" name="parent" class="input-small menu_parent" placeholder="父级菜单">
+
+			  <button type="submit" class="btn btn-success menu_submit">添加</button >
+			</form>
+		</div> 
 		<div class='user_table none'>
 			<table id="user_dataTable" class="table table-hover">
 				<thead>
@@ -136,6 +142,15 @@
 			</table>
 		</div>
 
+	<!--普通用户-->
+					<% } else if(data.type==2){%>
+						普通用户你好，你暂无其他可操作的选项！
+					<%} else {%>
+						订阅者你好
+					<%}%>
+				</div>	
+			<% }) %>
+        <% } %>
 
 	</section>
 

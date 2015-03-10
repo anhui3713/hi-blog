@@ -1,3 +1,11 @@
+/**
+ * 管理员专用js（等待 验证）
+ * github: https://github.com/highsea/hi-blog
+ * @author Gao Hai <admin@highsea90.com>
+ * @link http://highsea90.com
+ */
+
+
 //显隐表单
 function userClick(dom, cla){
     $('.'+dom).on('click', function(e){
@@ -7,7 +15,7 @@ function userClick(dom, cla){
 }
 
 userClick('admin_user','block');
-userClick('add_user','block');
+
 
 
 //提交新用户 序列化
@@ -155,9 +163,9 @@ function getUserAdmin (name,password) {
 
                     var dataString = {
                             "id"        : "<b class='us_id' data-id='"+data[i]._id+"'>"+i+"</b>",
-                            "name"      : "<input class='us_name' value='"+data[i].name+"' />",
-                            "password"  : "<input class='us_password' value='"+data[i].password+"' />",
-                            "type"      : "<input class='us_type' title='"+userType[data[i].type]+"' class=''  value='"+data[i].type+"' />",
+                            "name"      : "<textarea class='us_name'>"+data[i].name+"</textarea>",
+                            "password"  : "<textarea class='us_password'>"+data[i].password+"</textarea>",
+                            "type"      : "<textarea class='us_type' title='"+userType[data[i].type]+"' class=''>"+data[i].type+"</textarea>",
                             "operate"   : "<a title='删除用户' class='user_remove icon-remove'></a> . <a title='详细信息' class='user_info icon-th-list'></a> . <a title='保存修改' class='user_save icon-ok'></a>"
                         };
                     dataArr.push(dataString);
@@ -169,8 +177,16 @@ function getUserAdmin (name,password) {
                 user_table.addClass('block');
                 //初始化表格
                 var user_dataTable = $('#user_dataTable');
-
-                install_TB(user_dataTable,dataArr);
+                //添加 按钮
+                $('.administrator')
+                .append('<a class="btn add_user btn-primary">新增用户</a> ')
+                .append(' <a class="btn add_menu btn-primary">导航菜单</a>');
+                //“设置按钮内容”
+                userClick('add_user','block');
+                userClick('add_menu','block');
+                
+                
+                install_TB(user_dataTable, dataArr);
 
                 table_CURD(user_dataTable);
 

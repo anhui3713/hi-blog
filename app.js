@@ -1,10 +1,14 @@
 /**
- * Module dependencies.
+ * 依赖、路由、app
+ * github: https://github.com/highsea/hi-blog
+ * @author Gao Hai <admin@highsea90.com>
+ * @link http://highsea90.com
  */
 
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , routes_classify = require('./routes/routes_classify.js')
   , http = require('http')
   , path = require('path')
   , ejs = require('ejs')
@@ -91,6 +95,8 @@ app.get('/up1user', routes.up1user);
 app.get('/userCount', routes.userCount);
 app.get('/remove1user', routes.remove1user);
 app.get('/oneuser', routes.oneuser);
+
+app.get('/classifys',routes_classify.classifys);
 
 
 
