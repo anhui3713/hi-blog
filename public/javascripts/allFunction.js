@@ -87,12 +87,38 @@ function get_userCount(name, value, callback){
 
 
 
-/*String.prototype.trim=function(){
-	return this.replace(/(^\s*)|(\s*$)/g, "");
-}
-String.prototype.ltrim=function(){
-	return this.replace(/(^\s*)/g,"");
-}
-String.prototype.rtrim=function(){
-	return this.replace(/(\s*$)/g,"");
-}*/
+$.ajax({
+    type  : "get",
+    async : false,
+    url : '/getnav',
+    dataType : "jsonp",
+    jsonp : "callback",
+    jsonpCallback : "dataList",
+    success : function(dataList){
+    	
+    	if (dataList.code==2000) {
+    		var d = dataList.data;
+    		for (var i = 0; i < d.length; i++) {
+    			var id = d[i]._id,
+    				name = d[i].name,
+    				title = d[i].title,
+    				content = d[i].content,
+    				order = d[i].order,
+    				parent = d[i].parent,
+    				str = '<li id="'+id+'"><a href="/category/'+name+'" title="'+content+'">'+title+'</a></li>';
+    			$('.hi-menu').prepend(str);
+    		}
+    		$('.hi-menu').prepend('<li class="active"><a href="/">首页</a></li>');
+
+
+    	}else{
+    		alertHtml('alert-warning', '注意：', '读取菜单错误');
+    	}
+
+    },
+    error : function(){
+    	alertHtml('alert-danger', '注意：', '网络不稳定，请重试');
+    }
+})
+
+

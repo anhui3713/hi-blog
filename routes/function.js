@@ -1,5 +1,5 @@
 /**
- * 各种小方法，尽管我写的很傻
+ * 各种小方法，尽管我写的傻
  * github: https://github.com/highsea/hi-blog
  * @author Gao Hai <admin@highsea90.com>
  * @link http://highsea90.com
@@ -19,7 +19,20 @@ function add_update_verify(req, res, callback){
         callback();
     }
 }
-//方法 登录验证 
+
+//方法 菜单字母简写 中文名称 验证--用于 更新菜单 新建菜单
+function add_update_menu(req, res, callback){
+    var r = req.query;
+
+    if (!r.name||r.name==''||r.title==''||!r.title) {
+        jsonTips(req, res, '3010', '请检查菜单字母简写和中文名', '');
+
+    }else{
+        callback();
+    }
+}
+
+//方法 管理员操作的 登录验证 
 function login_verify(req, res, cb){
 
     var r = req.query;
@@ -105,3 +118,4 @@ exports.add_update_verify 	= add_update_verify;
 exports.login_verify  		= login_verify;
 exports.jsonTips 			= jsonTips;
 exports.json_api 			= json_api;
+exports.add_update_menu 	= add_update_menu;

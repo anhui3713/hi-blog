@@ -63,7 +63,9 @@ var classifySchema = new Schema({
     name    : String,//英文缩写
     title   : String,//中文导航
     content : String,//菜单介绍
-    parent  : String//空为顶级，有父级写父级的 name
+    time    : {type : Date, default: Date.now},
+    order   : {type : Number, default:0},//顺序，0最前面
+    parent  : {type : String, default: '0'}// 0 为顶级，有父级写父级的 name
 })
 
 var apiKeySchema = new Schema({

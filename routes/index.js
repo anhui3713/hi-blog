@@ -104,22 +104,11 @@ exports.register = function(req, res){
     })
 }
 
-
-
-
-
-
 //新增 create 前台注册用户 （单个）
 exports.adduser = function(req, res){
     var query = {name: req.body.user, password: req.body.password};
     if(query.name==''||query.password==''){
         res.redirect('/error');
-/*        res.render('error',{
-            title:"操作错误",
-            status:"error",
-            message:"用户名或密码为空"
-        });*/
-
     }else{
 
         database.userlist.create(query, function(error){
@@ -134,9 +123,7 @@ exports.adduser = function(req, res){
                 })
             }
         })
-
     }
-
 }
 
 // get查找单用户 显示全部键值
@@ -220,7 +207,7 @@ exports.adduserget = function(req, res){
                 email       : r.email,
                 type        : r.type
             };
-            console.log(doc);
+            //console.log(doc);
 
             database.userlist.count({name:r.user}, function(err, result){
                 if (err) {

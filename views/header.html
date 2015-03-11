@@ -19,18 +19,19 @@
 
 <body class="container-narrow" screen_capture_injected="true">
 <div class="masthead">
-<ul class="nav nav-pills pull-right">
-  <li class="active"><a href="/">首页</a></li>
+  <div class="tips"></div>
+  <ul class="nav nav-pills hi-menu pull-right">
+  <!--   <li class="active"><a href="/">首页</a></li>
   <li><a href="#">关于</a></li>
-  <li><a href="#">其他</a></li>
-  <li>
-  	<% if (result!='') { %>
-  	<a href="/logout">退出</a>
-  	<% }else{ %>
-	<a href="/login">登录</a>
-  	<% } %>
-  </li>
-</ul>
+  <li><a href="#">其他</a></li> -->
+    <li>
+    	<% if (result!='') { %>
+    	<a href="/logout">退出</a>
+    	<% }else{ %>
+  	<a href="/login">登录</a>
+    	<% } %>
+    </li>
+  </ul>
 <h3 class="muted"><%= title %></h3>
 </div>
 <hr>

@@ -83,6 +83,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 // hi-blog 项目路由
+//会员
 app.get('/login', routes.login);
 app.get('/logout', routes.logout);
 app.post('/home', routes.homepost);
@@ -95,9 +96,9 @@ app.get('/up1user', routes.up1user);
 app.get('/userCount', routes.userCount);
 app.get('/remove1user', routes.remove1user);
 app.get('/oneuser', routes.oneuser);
-
-app.get('/classifys',routes_classify.classifys);
-
+//菜单
+app.get('/addnav', routes_classify.addnav);
+app.get('/getnav', routes_classify.getnav);
 
 
 

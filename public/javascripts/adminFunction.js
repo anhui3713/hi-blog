@@ -18,16 +18,44 @@ userClick('admin_user','block');
 
 
 
+//对应元素值
+function elm_v(d){
+    var v = $('.'+d).val(),
+        x = $('[name="'+d+'"]').val();
+
+    if (v!=''&&v!=undefined) {
+        return v;
+    }else{
+        return x;
+    }
+}
+
+//提交菜单 序列化
+$('.add_menu_form > form').submit(function(e) {
+    e.preventDefault;
+    $('.tips').html('');
+    var menu_name = elm_v('menu_name'),
+        menu_title = elm_v('menu_title');
+    var serialize = $(this).serialize(),
+        m_name = elm_v('m_name'),
+        m_password = elm_v('m_password');
+    if (checkUser(menu_name)) {
+        
+    };
+
+});
+
+
 //提交新用户 序列化
 $('.add_user_form > form').submit(function(e){
     e.preventDefault;
     $('.tips').html('');
-    var add_username = $('.add_username').val(),
-        add_password = $('.add_password').val();
+    var add_username = elm_v('add_username'),
+        add_password = elm_v('add_password');
 
     var serialize = $(this).serialize(),
-        m_name = $('[name="m_name"]').val(),
-        m_password = $('[name="m_password"]').val();
+        m_name = elm_v('m_name'),
+        m_password = elm_v('m_password');
 
     if (checkUser(add_username)) {
 
@@ -36,10 +64,7 @@ $('.add_user_form > form').submit(function(e){
             return false;
         }else{
             get_addUser(serialize, m_name, m_password);
-/*          get_userCount('user', add_username, function(){
 
-                get_addUser(serialize, m_name, m_password);
-            });*/
         }
     }else{
         alertHtml('alert-warning', '对不起：', '用户名必须是字母开头4-16位由字母、数字、下划线组成！');
@@ -51,15 +76,17 @@ $('.add_user_form > form').submit(function(e){
 
 //提交 密钥验证
 $('.m_submit').on('click', function() {
-    var m_name = $('[name="m_name"]').val(),
-        m_password = $('[name="m_password"]').val();
+        var m_name = elm_v('m_name'),
+            m_password = elm_v('m_password');
     if (!m_name||!m_password) {
         $('.admin_user_form').find('input').addClass('borderRed');
     }else{
         $('.admin_user_form').removeClass('block');
         getUserAdmin (m_name, m_password);
     }
-})
+});
+
+
 
 var userType = {
     "0" : "已注销",
@@ -70,8 +97,8 @@ var userType = {
 
 
 function table_CURD(d){
-    var m_name = $('[name="m_name"]').val(),
-        m_password = $('[name="m_password"]').val();
+    var m_name = elm_v('m_name'),
+        m_password = elm_v('m_password');
     
     d.on('click', '.user_save', function(e){
         e.preventDefault;
@@ -184,7 +211,7 @@ function getUserAdmin (name,password) {
                 //“设置按钮内容”
                 userClick('add_user','block');
                 userClick('add_menu','block');
-                
+
                 
                 install_TB(user_dataTable, dataArr);
 
