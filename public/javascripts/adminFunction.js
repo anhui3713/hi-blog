@@ -5,73 +5,46 @@
  * @link http://highsea90.com
  */
 
+//userClick('admin_user','block');
 
-//显隐表单
-function userClick(dom, cla){
-    $('.'+dom).on('click', function(e){
-        e.preventDefault();
-        $('.'+dom+'_form').toggleClass(cla);
+add_serialize('.add_menu_form > form', 'menu_name', 'menu_title', '您的菜单名称还未填写，它将是你导航上的菜单名称', '菜单简写必须是字母开头4-16位由字母、数字、下划线组成，它将会变成您的url', function(){
+    //给回调函数传值
+    var serialize = $('.add_menu_form > form').data('serialize');
+    get_add_usermenu('addnav', serialize, elm_v('m_name'), elm_v('m_password'));
+    
+})
+
+add_serialize('.add_user_form > form', 'add_username', 'add_password', '您的密码还没填写', '用户名必须是字母开头4-16位由字母、数字、下划线组成！', function(){
+    //给回调函数传值
+    var serialize = $('.add_user_form > form').data('serialize');
+    get_add_usermenu('adduserget', serialize, elm_v('m_name'), elm_v('m_password'));
+
+})
+
+
+//提交序列化 共用新用户 新增菜单
+function add_serialize(dom, addname, addpassword, str1, str2, callback){
+    $(dom).submit(function(e){
+        e.preventDefault;
+        $('.tips').html('');
+        //给回调函数传值
+        //var serialize = $(this).serialize();
+        $(dom).data('serialize', $(this).serialize());
+
+        if (checkUser(elm_v(addname))) {
+            if (!elm_v(addpassword)||elm_v(addpassword)=='') {
+                alertHtml('alert-warning', '对不起：', str1);
+                return false;
+            }else{
+                callback();
+            }
+        }else{
+            alertHtml('alert-warning', '对不起：', str2);
+            return false;
+        }
+        return false;
     })
 }
-
-userClick('admin_user','block');
-
-
-
-//对应元素值
-function elm_v(d){
-    var v = $('.'+d).val(),
-        x = $('[name="'+d+'"]').val();
-
-    if (v!=''&&v!=undefined) {
-        return v;
-    }else{
-        return x;
-    }
-}
-
-//提交菜单 序列化
-$('.add_menu_form > form').submit(function(e) {
-    e.preventDefault;
-    $('.tips').html('');
-    var menu_name = elm_v('menu_name'),
-        menu_title = elm_v('menu_title');
-    var serialize = $(this).serialize(),
-        m_name = elm_v('m_name'),
-        m_password = elm_v('m_password');
-    if (checkUser(menu_name)) {
-        
-    };
-
-});
-
-
-//提交新用户 序列化
-$('.add_user_form > form').submit(function(e){
-    e.preventDefault;
-    $('.tips').html('');
-    var add_username = elm_v('add_username'),
-        add_password = elm_v('add_password');
-
-    var serialize = $(this).serialize(),
-        m_name = elm_v('m_name'),
-        m_password = elm_v('m_password');
-
-    if (checkUser(add_username)) {
-
-        if (!add_password||add_password=='') {
-            alertHtml('alert-warning', '对不起：', '您的密码还没填写');
-            return false;
-        }else{
-            get_addUser(serialize, m_name, m_password);
-
-        }
-    }else{
-        alertHtml('alert-warning', '对不起：', '用户名必须是字母开头4-16位由字母、数字、下划线组成！');
-        return false;
-    }
-    return false;
-})
 
 
 //提交 密钥验证
@@ -81,7 +54,7 @@ $('.m_submit').on('click', function() {
     if (!m_name||!m_password) {
         $('.admin_user_form').find('input').addClass('borderRed');
     }else{
-        $('.admin_user_form').removeClass('block');
+        $('.admin_user_form > form').removeClass('block').addClass('none');
         getUserAdmin (m_name, m_password);
     }
 });
@@ -115,7 +88,6 @@ function table_CURD(d){
         e.preventDefault();
         var this_id = $(this).closest('tr').find('.us_id').data('id');
         if(window.confirm('你确定要删除用户吗？操作不可恢复！')){
-
             get_remove1user(m_name, m_password, this_id)
             //alert("确定");
             return true;
@@ -161,6 +133,47 @@ function install_TB(t,data){
 }
 
 
+//新增 单用户 或者 新增菜单
+function get_add_usermenu(url, serialize, name, key){
+    //alert('2'+serialize);
+    jQuery.ajax({
+        type  : "get",
+        async : false,
+        url : '/'+url+'?'+serialize,
+        dataType : "jsonp",
+        jsonp : "callback",
+        data : {
+            name:name,
+            key:key
+        },
+        jsonpCallback : "dataList",
+        success : function(dataList){
+            $('.tips').html('');
+            var code = dataList.code,
+                message = dataList.message,
+                data = dataList.data;
+
+            if (code==2000) {
+                
+                alertHtml('alert-success', '很好!', '您添加成功了');
+
+            } else if (code == 2001) {
+                alertHtml('alert-info', '注意：', message);
+            } else if (code == 2002) {
+                alertHtml('alert-warning', '危险：', message);
+            } else if (code == 2003) {
+                alertHtml('alert-info', '注意：', message);
+            } else{
+                alertHtml('alert-info', '注意：', JSON.stringify(message));
+
+            }
+        },
+        error : function(){
+            alertHtml('alert-danger', '注意：', '网络不稳定，请重试');
+        }
+    })
+}
+
 //获取所有用户 主要信息
 function getUserAdmin (name,password) {
 
@@ -178,6 +191,7 @@ function getUserAdmin (name,password) {
         success : function(dataList){
 
             $('.tips').html('');
+
             if (dataList.code!=2000) {
                 alertHtml('alert-warning', dataList.message, '');
             }else{
@@ -206,11 +220,11 @@ function getUserAdmin (name,password) {
                 var user_dataTable = $('#user_dataTable');
                 //添加 按钮
                 $('.administrator')
-                .append('<a class="btn add_user btn-primary">新增用户</a> ')
-                .append(' <a class="btn add_menu btn-primary">导航菜单</a>');
+                .append('<a data-cla="add_user" class="btn add_user btn-primary">新增用户</a> ')
+                .append(' <a data-cla="add_menu" class="btn add_menu btn-primary">导航菜单</a>');
                 //“设置按钮内容”
-                userClick('add_user','block');
-                userClick('add_menu','block');
+                //userClick('add_user','block');
+                //userClick('add_menu','block');
 
                 
                 install_TB(user_dataTable, dataArr);
@@ -289,47 +303,6 @@ function get_remove1user(name, key, id){
 
 
 
-//新增 单用户
-function get_addUser(serialize, name, key){
-    jQuery.ajax({
-        type  : "get",
-        async : false,
-        url : '/adduserget?'+serialize,
-        dataType : "jsonp",
-        jsonp : "callback",
-        data : {
-            name:name,
-            key:key
-        },
-        jsonpCallback : "dataList",
-        success : function(dataList){
-            $('.tips').html('');
-            var code = dataList.code,
-                message = dataList.message,
-                data = dataList.data;
-
-            if (code==2000) {
-                
-                alertHtml('alert-success', '很好!', '您添加成功了');
-
-            } else if (code == 2001) {
-                alertHtml('alert-info', '注意：', message);
-            } else if (code == 2002) {
-                alertHtml('alert-warning', '危险：', message);
-            } else if (code == 2003) {
-                alertHtml('alert-info', '注意：', message);
-            } else{
-                alertHtml('alert-info', '注意：', JSON.stringify(message));
-
-            }
-        },
-        error : function(){
-            alertHtml('alert-danger', '注意：', '网络不稳定，请重试');
-        }
-    })
-}
-
-
 
 //更新单用户信息 get_up1user
 function get_up1user (name, key, id, user, password, type) {
@@ -366,3 +339,29 @@ function get_up1user (name, key, id, user, password, type) {
 }
 
 
+//显隐表单
+/*function userClick(dom, cla){
+    $('.'+dom).on('click', function(e){
+        e.preventDefault();
+        $('.'+dom+'_form').toggleClass(cla);
+    })
+}*/
+//对应元素值
+function elm_v(d){
+    var v = $('.'+d).val(),
+        x = $('[name="'+d+'"]').val();
+
+    if (v!=''&&v!=undefined) {
+        return v;
+    }else{
+        return x;
+    }
+}
+// 管理员操作选项 tab
+$('.administrator').on('click', 'a', function(e) {
+    e.preventDefault();
+    $('.'+$(this).data('cla')).removeClass('blueBG').addClass('redBG')
+    .siblings('a').removeClass('redBG').addClass('blueBG');
+    $('.'+$(this).data('cla')+'_form').removeClass('none').addClass('block')
+    .siblings('section').removeClass('block').addClass('none');
+});

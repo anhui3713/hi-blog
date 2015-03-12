@@ -30,16 +30,17 @@ $('.user_verify').on('click', function(e) {
 	}
 });
 
-
+//检查 该字符串是否由 字母开头4-16位由字母数字下划线组成
 function checkUser(str){
     var re = /^[a-zA-z]\w{3,15}$/;
-    if(re.test(str)){
+    if (!str||str=='') {
+    	return false;
+    }else if(re.test(str)){
 		return true;
     }else{
 		return false;
     }    
 }
-
 
 $('.tab_head').on('click', 'li', function(e) {
 	e.preventDefault();//mouseenter mouseleave
@@ -105,7 +106,7 @@ $.ajax({
     				content = d[i].content,
     				order = d[i].order,
     				parent = d[i].parent,
-    				str = '<li id="'+id+'"><a href="/category/'+name+'" title="'+content+'">'+title+'</a></li>';
+    				str = '<li id="'+id+'" class="menu_'+name+'"><a href="/category/?classify='+name+'" title="'+content+'">'+title+'</a></li>';
     			$('.hi-menu').prepend(str);
     		}
     		$('.hi-menu').prepend('<li class="active"><a href="/">首页</a></li>');

@@ -99,6 +99,7 @@ app.get('/oneuser', routes.oneuser);
 //菜单
 app.get('/addnav', routes_classify.addnav);
 app.get('/getnav', routes_classify.getnav);
+app.get('/category', routes_classify.category);
 
 
 

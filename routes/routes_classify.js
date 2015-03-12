@@ -54,3 +54,52 @@ exports.getnav = function (req, res){
         fun.json_api(req, res, err, doc);
     })
 }
+
+//更新菜单 管理员权限
+exports.up1nav = function(req, res){
+    //管理员权限验证
+    fun.login_verify(req, res, function(){
+        //提交参数验证
+        fun.add_update_menu(req, res, function(){
+
+            var r = req.query,
+                doc = {
+                    name    : r.english,
+                    title   : r.title,
+                    content : r.content,
+                    parent  : r.parent,
+                    order   : r.order
+                }
+            //查询去重 //name 不能重复//title可以
+            database.classify.count({name:r.english}, function(err, result){
+                if (err) {
+                    fun.jsonTips(req, res, 5001, err, '');
+                }else{
+                    if (result) {
+                        fun.jsonTips(req, res, '3014', 'menu exist', '菜单简写已经存在');
+                    }else{
+                        //插入操作
+                        database.classify.create(doc, function(err){
+                            fun.json_api(req, res, err, doc);
+                        })
+                    }
+                }
+            })
+        })
+    }) 
+}
+
+exports.category = function(req, res){
+
+    if (req.session.username) {
+        var result = 1
+    }else{
+        var result = 0
+    }
+    // req.query.classify 对该值判断以确定 是否渲染什么页面
+
+    res.render('category', {
+        title: req.query.classify,
+        result: result
+    })
+}

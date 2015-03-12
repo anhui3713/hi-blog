@@ -64,7 +64,7 @@ var classifySchema = new Schema({
     title   : String,//中文导航
     content : String,//菜单介绍
     time    : {type : Date, default: Date.now},
-    order   : {type : Number, default:0},//顺序，0最前面
+    order   : {type : Number, default: 0},//顺序，0最前面
     parent  : {type : String, default: '0'}// 0 为顶级，有父级写父级的 name
 })
 

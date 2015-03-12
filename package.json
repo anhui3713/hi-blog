@@ -1,6 +1,6 @@
 {
   "name": "hi-blog",
-  "version": "0.0.5",
+  "version": "0.0.5-1",
   "description": "hi-blog (Under development) by nodejs+express+mongodb",
   "scripts": {
     "start": "node app.js"
@@ -14,7 +14,9 @@
     "Express",
     "Ejs",
     "blog",
-    "cms"
+    "cms",
+    "多会员",
+    "分类菜单"
   ],
   "dependencies": {
     "express": "3.2.2",

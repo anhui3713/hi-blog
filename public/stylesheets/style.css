@@ -19,6 +19,8 @@ textarea{resize:none}
 
 .none{display: none;}
 .block{display: block;}
+.redBG{background: #da4f49}
+.blueBG{background: #006dcc}
 .borderRed{border-color: #f00!important;color: #f00}
 .tab_head .active{background: #08c;color: #fff}
 .tab_head li{padding: 0.1em 0.5em;margin: 0.2em 0;cursor:pointer;}
@@ -30,6 +32,7 @@ textarea{resize:none}
 .users_list textarea{width: 60px;height: 1.5em;border: none;text-decoration: underline;color: #00c;overflow: hidden;white-space: nowrap;resize: none;}
 .users_list .us_id,.users_list .us_type{width: 20px;}
 .users_list .us_name{width: 90px;}
+
 select[name="user_dataTable_length"]{width:65px;}
 input[aria-controls="user_dataTable"]{width: 90px}
 

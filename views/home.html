@@ -64,25 +64,25 @@
 						
 						<div class="administrator">
 							<p class="label label-info">管理员你好：</p> <br>
-							<a class="btn admin_user btn btn-danger">用户管理</a>
+							<a data-cla="admin_user" class="btn admin_user btn btn-primary">用户管理</a>
 						</div>
 
 					
 
-		<div class="none admin_user_form">
+		<section class="admin_user_form none ">
 
 			<form class="form-horizontal">
 			  <div><br>该操作危险，你确认你的密钥权限（ 测试密钥：名称 t 密码 data ）</div>
 			  <div class="control-group">
 			    <label class="control-label">密钥名称</label>
 			    <div class="controls">
-			      <input type="text" name="m_name" placeholder="t">
+			      <input type="text" name="m_name" placeholder="test">
 			    </div>
 			  </div>
 			  <div class="control-group">
 			    <label class="control-label">密钥字符串</label>
 			    <div class="controls">
-			      <input type="password" name="m_password" placeholder="data">
+			      <input type="password" name="m_password" placeholder="123">
 			    </div>
 			  </div>
 			  <div class="control-group">
@@ -91,10 +91,27 @@
 			    </div>
 			  </div>
 			</form>
-			
-		</div>
 
-		<div class="none add_user_form">
+			<div class='user_table'>
+				<table id="user_dataTable" class="table table-hover">
+					<thead>
+						<tr>
+						  <th width="20%">序号</th>
+						  <th width="20%">用户名</th>
+						  <th width="20%">密码</th>
+						  <th width="20%">等级</th>
+						  <th width="20%">操作</th>
+						</tr>
+					</thead>
+					<tbody class="users_list">
+
+					</tbody>
+				</table>
+			</div>
+			
+		</section>
+
+		<section class="add_user_form none ">
 			<br>
 			<p>新增用户前请点击管理用户 提交你的密钥</p>
 			<form class="form-inline">
@@ -114,10 +131,12 @@
 			  </select>
 			  <button type="submit" class="btn btn-success add_submit">创建</button >
 			</form>
-		</div>
- 		<div class='add_menu_form none'>
+		</section>
+ 		<section class='add_menu_form none'>
  			<br>
-
+			<div class="menu_toolbar">
+				
+			</div>
  			<br>
 			<form class="form-inline">
 			  <input type="text" name="english" class="input-small menu_name" placeholder="菜单字母简写 *">
@@ -128,23 +147,8 @@
 
 			  <button type="submit" class="btn btn-success menu_submit">添加</button >
 			</form>
-		</div> 
-		<div class='user_table none'>
-			<table id="user_dataTable" class="table table-hover">
-				<thead>
-					<tr>
-					  <th width="20%">序号</th>
-					  <th width="20%">用户名</th>
-					  <th width="20%">密码</th>
-					  <th width="20%">等级</th>
-					  <th width="20%">操作</th>
-					</tr>
-				</thead>
-				<tbody class="users_list">
+		</section> 
 
-				</tbody>
-			</table>
-		</div>
 
 	<!--普通用户-->
 					<% } else if(data.type==2){%>
