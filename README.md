@@ -1,5 +1,7 @@
 楼主正在用业余时间开发中…… ，目前的版本仅支持会员系统，尝鲜一下吧~
 
+或者移步同类产品 [一个基于NodeJS的阅后即焚推广系统（带后台管理）](https://github.com/highsea/JK_Inc)
+
 ### hi-blog
 
 + 一个 nodejs+express+mongodb 的 cms 系统
